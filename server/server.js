@@ -4,6 +4,7 @@ const socketIO = require("socket.io");
 const http = require("http");
 const publicpath = path.join(__dirname,"../public"); // if path comes two zero length string then it return . server/../ is zero length
 
+const {generateMessage} = require("./utils/message");
 const app  = new express();
 const port = process.env.PORT || 3000;
 var server = http.createServer(app);
@@ -11,27 +12,16 @@ app.use(express.static(publicpath));
 var io = socketIO(server);
 io.on("connection",(socket)=>{  // on is used to listen to an event
  console.log("new user is connected");
- socket.emit("newmessage",{
- from:'admin',
- text:'welcome to group budddy',
- createdAt: new Date().getTime()});
- socket.broadcast.emit('newmessage',{
-   from:"admin",
-   text:'new user joined',
-   createdAt: new Date().getTime()
- }),
- socket.on('createmessage',(message)=>{
+ socket.emit("newmessage",generateMessage('admin','welcome to the group buddy'));
+ socket.broadcast.emit('newmessage',generateMessage('admin','new user joined'));
+ socket.on('createmessage',(message)=>{  
    console.log('create a message',message);
    //broadcasting a message
      //server is broadcasting a message to every one
-    io.emit('newmessage',{
-        from:message.from,
-        text:message.text,
-        createdAt: new Date().getTime()
-    });
+    io.emit('newmessage',generateMessage(message.from,message.text));
     //broadcast is done by a particular socket
 //  socket.broadcast.emit('newmessage',{
-//      from:message.from,
+//     from:message.from,
 //      text:message.text,
 //      createdAt: new Date().getTime()
 // });

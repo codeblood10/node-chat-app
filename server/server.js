@@ -14,11 +14,12 @@ io.on("connection",(socket)=>{  // on is used to listen to an event
  console.log("new user is connected");
  socket.emit("newmessage",generateMessage('admin','welcome to the group buddy'));
  socket.broadcast.emit('newmessage',generateMessage('admin','new user joined'));
- socket.on('createmessage',(message)=>{  
+ socket.on('createmessage',(message,callback)=>{
    console.log('create a message',message);
    //broadcasting a message
      //server is broadcasting a message to every one
     io.emit('newmessage',generateMessage(message.from,message.text));
+    callback('hey this is server');
     //broadcast is done by a particular socket
 //  socket.broadcast.emit('newmessage',{
 //     from:message.from,

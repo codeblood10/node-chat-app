@@ -11,14 +11,30 @@ app.use(express.static(publicpath));
 var io = socketIO(server);
 io.on("connection",(socket)=>{  // on is used to listen to an event
  console.log("new user is connected");
+ socket.emit("newmessage",{
+ from:'admin',
+ text:'welcome to group budddy',
+ createdAt: new Date().getTime()});
+ socket.broadcast.emit('newmessage',{
+   from:"admin",
+   text:'new user joined',
+   createdAt: new Date().getTime()
+ }),
  socket.on('createmessage',(message)=>{
    console.log('create a message',message);
    //broadcasting a message
+     //server is broadcasting a message to every one
     io.emit('newmessage',{
         from:message.from,
         text:message.text,
         createdAt: new Date().getTime()
- });
+    });
+    //broadcast is done by a particular socket
+//  socket.broadcast.emit('newmessage',{
+//      from:message.from,
+//      text:message.text,
+//      createdAt: new Date().getTime()
+// });
 });
  // socket.emit('newmessage',{
  //  from:'bankit',

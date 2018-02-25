@@ -10,5 +10,5 @@ socket.on("disconnect",function(){
   console.log("disconnected from server");
 });
 socket.on("newmessage",function(email){
-    console.log("new email event",email);
+    console.log("new message",email);
 });

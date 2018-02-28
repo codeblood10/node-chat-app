@@ -15,6 +15,15 @@ socket.on("newmessage",function(message){
    li.text(`${message.from}:${message.text}`);
    jQuery('#messages').append(li);
 });
+socket.on("newlocationmessage",function(message){
+  var li = jQuery('<li></li>');
+  li.text(`${message.from}:`);
+  var a  = jQuery(`<a target="_blank" href="${message.url}" ></a>`);
+  a.text('find me');
+  li.append(a);
+  jQuery('#messages').append(li);
+
+ });
 socket.emit("createmessage",{from:"ankit",text:"hey buddy"},function(data){
   console.log("yup got it",data);
 });
@@ -26,5 +35,22 @@ socket.emit("createmessage",{from:"ankit",text:"hey buddy"},function(data){
     from:"user",
     text: jQuery('[name=message]').val()
   },function(){
+  });
+});
+
+var locationB = jQuery('#send-location');
+
+locationB.on('click',function(){
+  if(!navigator.geolocation)
+   {
+      return alert("your broswer does not support the geolocation api");
+   }
+  navigator.geolocation.getCurrentPosition(function(position){
+     socket.emit("createlocationmessage",{
+       latitude:position.coords.latitude,
+       longitude:position.coords.longitude
+     });
+  },function(){
+    alert("unable to fetch location");
   });
 });

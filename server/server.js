@@ -4,7 +4,7 @@ const socketIO = require("socket.io");
 const http = require("http");
 const publicpath = path.join(__dirname,"../public"); // if path comes two zero length string then it return . server/../ is zero length
 
-const {generateMessage} = require("./utils/message");
+const {generateMessage,generateLocationMessage} = require("./utils/message");
 const app  = new express();
 const port = process.env.PORT || 3000;
 var server = http.createServer(app);
@@ -26,7 +26,12 @@ io.on("connection",(socket)=>{  // on is used to listen to an event
 //      text:message.text,
 //      createdAt: new Date().getTime()
 // });
+
 });
+socket.on('createlocationmessage',(coords)=>{
+  io.emit('newlocationmessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
+});
+
  // socket.emit('newmessage',{
  //  from:'bankit',
  //  text:'hey whatsup',

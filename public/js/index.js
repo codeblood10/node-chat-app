@@ -11,13 +11,15 @@ socket.on("disconnect",function(){
 });
 socket.on("newmessage",function(message){
     console.log("new message",message);
+    var formattedtime = moment(message.createdAt).format("hh:mm a");
    var li = jQuery('<li></li>');
-   li.text(`${message.from}:${message.text}`);
+   li.text(`${message.from} ${formattedtime}:${message.text}`);
    jQuery('#messages').append(li);
 });
 socket.on("newlocationmessage",function(message){
   var li = jQuery('<li></li>');
-  li.text(`${message.from}:`);
+  var formattedtime = moment(message.createdAt).format("hh:mm a");
+  li.text(`${message.from} ${formattedtime}:`);
   var a  = jQuery(`<a target="_blank" href="${message.url}" ></a>`);
   a.text('find me');
   li.append(a);

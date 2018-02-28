@@ -19,7 +19,7 @@ io.on("connection",(socket)=>{  // on is used to listen to an event
    //broadcasting a message
      //server is broadcasting a message to every one
     io.emit('newmessage',generateMessage(message.from,message.text));
-    callback('hey this is server');
+    callback();//acknowledgement
     //broadcast is done by a particular socket
 //  socket.broadcast.emit('newmessage',{
 //     from:message.from,

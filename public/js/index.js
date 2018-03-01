@@ -9,6 +9,22 @@ socket.on("connect",function(){
 socket.on("disconnect",function(){
   console.log("disconnected from server");
 });
+function scrollToBottom(){
+ //selectors
+   var messages  = jQuery("#messages");
+   var newmessage = messages.children("li:last-child");
+ //heights
+  var st =  messages.prop('scrollTop');
+  var ch = messages.prop('clientHeight');
+  var sh = messages.prop('scrollHeight');
+  var nmh = newmessage.innerHeight();
+  var lmh = newmessage.prev().innerHeight();
+  if(st + ch  +nmh +lmh >= sh)
+  {
+    //console.log('should scroll');
+    messages.scrollTop(sh);
+  }
+}
 socket.on("newmessage",function(message){
     //console.log("new message",message);
     var formattedtime = moment(message.createdAt).format("hh:mm a");
@@ -19,6 +35,7 @@ socket.on("newmessage",function(message){
       createdAt : formattedtime
     });
     jQuery('#messages').append(html);
+    scrollToBottom();
    //
    // var li = jQuery('<li></li>');
    // li.text(`${message.from} ${formattedtime}:${message.text}`);
@@ -33,6 +50,7 @@ socket.on("newlocationmessage",function(message){
      createdAt : formattedtime
   });
   jQuery('#messages').append(html);
+  scrollToBottom();
   // var li = jQuery('<li></li>');
 
   // li.text(`${message.from} ${formattedtime}:`);

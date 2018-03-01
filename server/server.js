@@ -12,8 +12,8 @@ app.use(express.static(publicpath));
 var io = socketIO(server);
 io.on("connection",(socket)=>{  // on is used to listen to an event
  console.log("new user is connected");
- socket.emit("newmessage",generateMessage('admin','welcome to the group buddy'));
- socket.broadcast.emit('newmessage',generateMessage('admin','new user joined'));
+ socket.emit("newmessage",generateMessage('Admin','welcome to the group buddy'));
+ socket.broadcast.emit('newmessage',generateMessage('Admin','new user joined'));
  socket.on('createmessage',(message,callback)=>{
    console.log('create a message',message);
    //broadcasting a message

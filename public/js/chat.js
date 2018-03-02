@@ -3,7 +3,7 @@ socket.on("connect",function(){
  console.log("connected to server");
  // socket.emit("createmessage",{
  //  to:'ak@gmail.com',
- //  text:'heey this is 47 ak 47'
+ //  text:'hey this is 47 ak 47'
  // });
 });
 socket.on("disconnect",function(){

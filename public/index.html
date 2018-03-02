@@ -1,51 +1,30 @@
 <!Doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <link rel="stylesheet" href="/css/style.css">
+  <title>join | chatApp</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scable=no">
+  <meta  charset="utf-8">
+  <link rel="stylesheet" href="/css/style.css" />
+
 </head>
-<body class="chat">
-  <script id ="message-template" type="text/template">
-   <li class="message">
-     <div class ="message__title">
-       <h4>{{from}}</h4>
-       <span>{{createdAt}}<span>
-     </div>
-     <div class = "message__body">
-       <p>{{text}}</p>
-     </div>
-   </li>
-  </script>
-  <script id ="location-message-template" type="text/template">
-   <li class="message">
-     <div class ="message__title">
-       <h4>{{from}}</h4>
-       <span>{{createdAt}}<span>
-     </div>
-     <div class = "message__body">
-       <a target="_blank" href={{url}}>find me!!</p>
-     </div>
-   </li>
-  </script>
-  <div class="chat__sidebar">
-  <h3>People</h3>
-   <div id="users"></div>
-   </div>
- <div class="chat__main">
-   <!-- defer its a boolean attribute used for external script to be parsed html datta is parsed -->
-  <ol id="messages" class = "chat__messages"></ol>
-   <div class = "chat__footer">
-  <form id="message-form">
-     <input name="message" type='text' placeholder="some message" autofocus autocomplete="off"/>
-     <button>send</button>
-  </form>
-  <button id="send-location">sendlocation</button>
-</div>
-</div>
-<script src="/socket.io/socket.io.js" defer></script>
-<script src="/js/libs/jquery-3.3.1.min.js" defer></script>
-<script src='/js/index.js' defer></script>
-<script src='/js/libs/moment.js'></script>
-<script src='/js/libs/mustache.js'></script>
+<body class="centered-form">
+ <div class="centered-form__form">
+    <form action="/chat.html">
+      <div class="form-field">
+      <h3>join a chat</h3>
+      </div>
+      <div class= "form-field">
+        <label> Display name</label>
+        <input type="text" name="name" autofoucs />
+        </div>
+      <div class="form-field">
+           <label>Room name</label>
+           <input type="text" name="room" />
+       </div>
+      <div class='form-field'>
+      <button>join</button>
+      </div>
+    </form>
+ </div>
 </body>
 </html>

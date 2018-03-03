@@ -1,13 +1,37 @@
 var socket = io();
+//our query string reside in location object search property
+//jQuery.params({name="ankit",age=21}) convert into query string but does not a function to do vice versa
+
 socket.on("connect",function(){
  console.log("connected to server");
+ var param = jQuery.deparam(window.location.search);
+ socket.emit('join',param,function(err){
+   if(err)
+   {
+     alert(err);
+     window.location.href="/";
+   }
+   else
+   {
+     console.log("no error");
+   }
+ });
  // socket.emit("createmessage",{
  //  to:'ak@gmail.com',
  //  text:'hey this is 47 ak 47'
  // });
 });
+
 socket.on("disconnect",function(){
   console.log("disconnected from server");
+});
+socket.on('updateUserList',function(users){
+  var ol = jQuery("<ol></ol>");
+    jQuery("#users").empty();
+  users.forEach(function(user){
+    ol.append(jQuery("<li></li>").text(user));
+  });
+  jQuery("#users").append(ol); // we can use .html(ol) to wipe the list and update
 });
 function scrollToBottom(){
  //selectors

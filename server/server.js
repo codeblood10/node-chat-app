@@ -37,11 +37,14 @@ io.on("connection",(socket)=>{  // on is used to listen to an event
 
  });
  socket.on('createmessage',(message,callback)=>{
-   console.log('create a message',message);
+   //console.log('create a message',message);
    //broadcasting a message
      //server is broadcasting a message to every one
-    io.emit('newmessage',generateMessage(message.from,message.text));
+   var user = users.getUser(socket.id);
+   if(user&&isRealString(message.text)){
+    io.to(user.room).emit('newmessage',generateMessage(user.name,message.text));
     callback();//acknowledgement
+  }
     //broadcast is done by a particular socket
 //  socket.broadcast.emit('newmessage',{
 //     from:message.from,
@@ -51,7 +54,10 @@ io.on("connection",(socket)=>{  // on is used to listen to an event
 
 });
 socket.on('createlocationmessage',(coords)=>{
-  io.emit('newlocationmessage',generateLocationMessage('Admin',coords.latitude,coords.longitude));
+  var user = users.getUser(socket.id);
+  if(user){
+  io.to(user.room).emit('newlocationmessage',generateLocationMessage(user.name,coords.latitude,coords.longitude));
+}
 });
 
  // socket.emit('newmessage',{

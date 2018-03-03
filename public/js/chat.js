@@ -91,7 +91,6 @@ socket.on("newlocationmessage",function(message){
   //console.log("inside jquery");
   e.preventDefault();
   socket.emit("createmessage",{
-    from:"user",
     text: messageTextBox.val()
   },function(){
      messageTextBox.val('')
